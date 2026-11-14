@@ -48,6 +48,7 @@ function Column({ tiles, top }: { tiles: typeof TILES; top: number }) {
             style={StyleSheet.absoluteFill}
           />
           <View style={styles.tileGlow} />
+          <View style={styles.avatarOverlay} />
         </View>
       ))}
     </View>
@@ -60,10 +61,7 @@ export default function WelcomeScreen() {
   const { width } = useWindowDimensions();
   const [starting, setStarting] = useState(false);
 
-  /**
-   * No email, no OTP: a Supabase anonymous session is created straight away and
-   * the student verifies later with a college ID card.
-   */
+  /** No email, no OTP: a Supabase anonymous session is created straight away and the student verifies later with a college ID card. */
   async function start() {
     if (starting) return;
     setStarting(true);
@@ -126,7 +124,7 @@ export default function WelcomeScreen() {
       >
         <Text style={styles.title}>Welcome to SWAY</Text>
         <Text style={styles.subtitle}>
-          Join Us and Socialize With{'\n'}Millions of People
+          Join Us and Socialize With{'\\n'}Millions of People
         </Text>
 
         <View style={styles.actions}>
@@ -154,11 +152,7 @@ export default function WelcomeScreen() {
             <Text style={styles.discoverText}>
               {starting ? 'Starting…' : 'Discover'}
             </Text>
-            <View style={styles.arrowCircle}>
-              <Text style={styles.avatarEmoji}>🦦</Text>
-              <Text style={styles.avatarEmoji}>🦦</Text>
-              <Text style={styles.avatarEmoji}>🦦</Text>
-            </View>
+            <View style={styles.arrowCircle} />
           </Pressable>
         </View>
       </ScrollView>
@@ -284,11 +278,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  arrow: {
-    marginRight: -6,
-  },
   avatarEmoji: {
     fontSize: 18,
     color: '#FFFFFF',
+  },
+  avatarOverlay: {
+    position: 'absolute',
+    top: '25%',
+    left: '25%',
+    width: '50%',
+    height: '50%',
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
