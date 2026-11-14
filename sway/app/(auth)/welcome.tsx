@@ -124,7 +124,7 @@ export default function WelcomeScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <Text style={styles.title}>Find Your{'\n'}Partner With Us</Text>
+        <Text style={styles.title}>Welcome to SWAY</Text>
         <Text style={styles.subtitle}>
           Join Us and Socialize With{'\n'}Millions of People
         </Text>
