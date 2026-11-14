@@ -49,9 +49,7 @@ function Column({ tiles, top }: { tiles: typeof TILES; top: number }) {
             style={StyleSheet.absoluteFill}
           />
           <View style={styles.tileGlow} />
-          <View style={styles.avatarOverlay}>
-            <Text style={styles.avatarEmojiText}>{AVATARS[index % AVATARS.length]}</Text>
-          </View>
+          <Text style={styles.avatarEmoji}>{AVATARS[index % AVATARS.length]}</Text>
         </View>
       ))}
     </View>
@@ -155,7 +153,10 @@ export default function WelcomeScreen() {
             <Text style={styles.discoverText}>
               {starting ? 'Starting…' : 'Discover'}
             </Text>
-            <View style={styles.arrowCircle} />
+            <View style={styles.arrowCircle}>
+              <Text style={styles.avatarEmoji}>🦦</Text>
+              <Text style={styles.avatarEmoji}>🐼</Text>
+            </View>
           </Pressable>
         </View>
       </ScrollView>
@@ -273,26 +274,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   arrowCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarOverlay: {
-    position: 'absolute',
-    top: '20%',
-    left: '20%',
-    width: '60%',
-    height: '60%',
-    borderRadius: 999,
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarEmojiText: {
+  avatarEmoji: {
     fontSize: 24,
     color: '#1A1A1A',
   },
