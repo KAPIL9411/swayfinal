@@ -127,7 +127,7 @@ export default function WelcomeScreen() {
       >
         <Text style={styles.title}>Welcome to SWAY</Text>
         <Text style={styles.subtitle}>
-          Join Us and Socialize With{'\\n'}Millions of People
+          Join millions of students and researchers
         </Text>
 
         <View style={styles.actions}>
