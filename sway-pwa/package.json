@@ -1,0 +1,12 @@
+{
+  "name": "sway-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "iOS installable PWA build of the SWAY campus app",
+  "scripts": {
+    "assets": "node generate-assets.mjs",
+    "build": "node build.mjs",
+    "serve": "npx --yes serve dist -l 8082 --single"
+  }
+}

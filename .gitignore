@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# builds / generated
+dist/
+.expo/
+.wrangler/
+web-build/
+coverage/
+
+# secrets - never commit
+.env
+.env.*
+!.env.example
+.dev.vars
+*.pem
+*.key
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+
+# local tooling
+.freebuff/
+.DS_Store
+*.log

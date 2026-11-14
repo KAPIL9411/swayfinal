@@ -1,0 +1,7 @@
+# Don't publish these to npm (if ever published)
+*.md
+.git*
+src/
+tsconfig.json
+.env*
+.DS_Store

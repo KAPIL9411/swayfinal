@@ -1,0 +1,8 @@
+# Root-anchored: nested folders named node_modules must still be uploaded.
+# Expo puts fonts under dist/assets/node_modules/..., and `wrangler pages deploy`
+# skips anything matching .gitignore - an unanchored "node_modules/" silently
+# dropped every font from the deployment.
+/dist/
+/.check/
+/.serve.log
+/node_modules/

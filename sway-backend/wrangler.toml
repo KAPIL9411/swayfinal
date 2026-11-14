@@ -1,0 +1,40 @@
+# Cloudflare Workers configuration for SWAY Backend
+
+name = "sway-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Account ID (get from Cloudflare dashboard)
+# account_id = "your-account-id"
+
+# Workers AI binding (for moderation)
+# [ai]
+# binding = "AI"
+
+# KV namespace for rate limiting
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "your-kv-id"
+
+# Secrets (set via: wrangler secret put SECRET_NAME)
+# SUPABASE_URL
+# SUPABASE_SERVICE_KEY
+# SUPABASE_JWT_SECRET
+# EXPO_PUSH_TOKEN
+
+[vars]
+# Admin panel accounts (comma separated). profiles.is_admin=true also works.
+ADMIN_EMAILS = "admin@sway.app"
+
+[build]
+command = ""
+
+# Environment configuration
+[env.production]
+name = "sway-api-prod"
+routes = [
+  { pattern = "api.sway.app/*", zone_name = "sway.app" }
+]
+
+[env.staging]
+name = "sway-api-staging"

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>SWAY — Your campus, unfiltered</title>
+    <meta
+      name="description"
+      content="SWAY is the anonymous wall, live radar and secret vibes app for Indian college campuses. Verified students only. Free on Android and iPhone."
+    />
+    <meta name="theme-color" content="#9700cd" />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/icon.png" />
+    <meta property="og:title" content="SWAY — Your campus, unfiltered" />
+    <meta
+      property="og:description"
+      content="Anonymous campus wall, secret vibes and real conversations. Verified college students only."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preload" href="assets/fonts/Anybody-ExtraBold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <noscript>
+      <style>
+        .reveal { opacity: 1 !important; transform: none !important; }
+        .nav__links { display: flex !important; }
+        .nav__toggle { display: none !important; }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="nav" id="nav">
+      <div class="nav__inner">
+        <a class="brand" href="#top" aria-label="SWAY home">
+          <span class="brand__word">SWAY</span>
+          <span class="brand__dot" aria-hidden="true"></span>
+        </a>
+
+        <nav class="nav__links" id="navLinks" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#safety">Safety</a>
+          <a href="#install">Install</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="nav__actions">
+          <a class="btn btn--dark btn--sm" href="#install">Get the app</a>
+          <button
+            class="nav__toggle"
+            id="navToggle"
+            aria-expanded="false"
+            aria-controls="navLinks"
+            aria-label="Open menu"
+          >
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ── Hero ───────────────────────────────────────────── -->
+      <section class="hero" id="top">
+        <div class="wrap hero__grid">
+          <div class="hero__copy reveal">
+            <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>CAMPUS SOCIAL · INDIA</p>
+
+            <h1 class="hero__title">
+              Your campus,<br />
+              <em>unfiltered.</em>
+            </h1>
+
+            <p class="lede">
+              The anonymous wall, the live radar and the secret vibes of your college — in one app
+              built only for verified students.
+            </p>
+
+            <div class="cta-row">
+              <!-- Swap this href for your public APK URL once the build is hosted -->
+              <a
+                class="btn btn--primary"
+                href="https://expo.dev/accounts/fixyes/projects/sway-campus/builds"
+                data-download="android"
+                rel="noopener"
+              >
+                Download for Android
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+              </a>
+
+              <a class="btn btn--ghost" href="https://sway.pages.dev" data-download="ios">
+                Install on iPhone
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+              </a>
+            </div>
+
+            <p class="fineprint">
+              Free · Android APK · iPhone works from Safari — “Add to Home Screen”
+            </p>
+
+            <ul class="hero__proof">
+              <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 5" /></svg>Verified college emails</li>
+              <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 5" /></svg>No faculty accounts</li>
+              <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 5" /></svg>Anonymous by default</li>
+            </ul>
+          </div>
+
+          <div class="hero__visual reveal" aria-hidden="true">
+            <div class="phone">
+              <div class="phone__glow"></div>
+              <div class="phone__frame">
+                <div class="phone__screen">
+                  <div class="mini">
+                    <div class="mini__top">
+                      <span class="mini__pill"><i></i>CAMPUS NETWORK • LIVE</span>
+                      <span class="mini__login">Log In</span>
+                    </div>
+
+                    <p class="mini__brand">SWAY<span></span></p>
+
+                    <p class="mini__headline">YOUR <em>UNFILTERED</em><br />CAMPUS PULSE.</p>
+
+                    <div class="mini__radar">
+                      <span class="ring ring--1"></span>
+                      <span class="ring ring--2"></span>
+                      <span class="ring ring--3"></span>
+                      <i class="core"></i>
+                      <b>HOST CAMPUS</b>
+                      <span class="node node--a"><i></i>IIT DELHI</span>
+                      <span class="node node--b"><i></i>NIET</span>
+                    </div>
+
+                    <div class="mini__rows">
+                      <div><i class="bolt"></i><span></span></div>
+                      <div><i class="chat"></i><span></span></div>
+                      <div><i class="shield"></i><span></span></div>
+                    </div>
+
+                    <div class="mini__post">
+                      <div class="mini__post-top"><span>CONFESSION</span><span>2m</span></div>
+                      <p>“Someone left hot chai in Lab 3. Thank you, stranger.”</p>
+                    </div>
+
+                    <div class="mini__ticker"><b>CS Dept •</b> “Someone left hot chai in Lab 3…”</div>
+
+                    <div class="mini__cta">Join with college email <span>→</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span>ANONYMOUS WALL</span><b>•</b>
+            <span>SECRET VIBES</span><b>•</b>
+            <span>LIVE RADAR</span><b>•</b>
+            <span>VERIFIED STUDENTS</span><b>•</b>
+            <span>ZERO FACULTY</span><b>•</b>
+            <span>ANONYMOUS WALL</span><b>•</b>
+            <span>SECRET VIBES</span><b>•</b>
+            <span>LIVE RADAR</span><b>•</b>
+            <span>VERIFIED STUDENTS</span><b>•</b>
+            <span>ZERO FACULTY</span><b>•</b>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Features ───────────────────────────────────────── -->
+      <section class="section" id="features">
+        <div class="wrap">
+          <header class="section__head reveal">
+            <p class="eyebrow">WHAT'S INSIDE</p>
+            <h2>Built for the 2&nbsp;am campus.</h2>
+            <p class="section__lede">
+              Five things students actually open every day — nothing else bolted on.
+            </p>
+          </header>
+
+          <div class="grid grid--3">
+            <article class="card reveal">
+              <span class="card__icon card__icon--lime">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z" /></svg>
+              </span>
+              <h3>The campus wall</h3>
+              <p>Confessions, questions, lost &amp; found, fest chaos — posted without your name on it.</p>
+            </article>
+
+            <article class="card reveal">
+              <span class="card__icon card__icon--violet">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r="1" /></svg>
+              </span>
+              <h3>Discover radar</h3>
+              <p>Students from your campus, filtered by the things you actually share.</p>
+            </article>
+
+            <article class="card reveal">
+              <span class="card__icon card__icon--violet">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z" /></svg>
+              </span>
+              <h3>Secret vibes</h3>
+              <p>Send a vibe with no message attached. If it’s mutual, a private chat unlocks.</p>
+            </article>
+
+            <article class="card reveal">
+              <span class="card__icon card__icon--lime">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 11-3.2-6.9" /><path d="M21 4v5h-5" /></svg>
+              </span>
+              <h3>Campus chats</h3>
+              <p>Matches, requests and conversations in one inbox — only people who vibed back.</p>
+            </article>
+
+            <article class="card reveal">
+              <span class="card__icon card__icon--ink">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" /><path d="M9 12l2 2 4-4" /></svg>
+              </span>
+              <h3>Verified students only</h3>
+              <p>Sign up with your college email. One check, then it never appears on your posts.</p>
+            </article>
+
+            <article class="card reveal">
+              <span class="card__icon card__icon--ink">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c3.3 0 6 2.7 6 6v3l2 3H4l2-3v-3c0-3.3 2.7-6 6-6z" /><path d="M10 19a2 2 0 004 0" /></svg>
+              </span>
+              <h3>Quiet by design</h3>
+              <p>No follower counts, no public likes race, no algorithmic feed shouting for attention.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── How it works ───────────────────────────────────── -->
+      <section class="section section--tint" id="how">
+        <div class="wrap">
+          <header class="section__head reveal">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2>Three steps. One minute.</h2>
+          </header>
+
+          <ol class="steps">
+            <li class="reveal">
+              <span class="steps__num">01</span>
+              <h3>Pick your college</h3>
+              <p>Choose your campus from the list. SWAY is invite-by-campus, not invite-by-friend.</p>
+            </li>
+            <li class="reveal">
+              <span class="steps__num">02</span>
+              <h3>Verify your student email</h3>
+              <p>A six-digit code goes to your college address. That code is the only thing we keep.</p>
+            </li>
+            <li class="reveal">
+              <span class="steps__num">03</span>
+              <h3>Post, vibe, chat</h3>
+              <p>Pick a handle, choose interests, and you’re on the wall. Your email stays private.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ── Safety ─────────────────────────────────────────── -->
+      <section class="section" id="safety">
+        <div class="wrap safety">
+          <div class="safety__copy reveal">
+            <p class="eyebrow">SAFETY &amp; PRIVACY</p>
+            <h2>Anonymous for the campus.<br />Traceable for us.</h2>
+            <p class="section__lede">
+              Posts carry no name, no handle, no avatar. Behind the scenes every report can be traced
+              to an account so harassment has consequences — that trace never shows on the wall.
+            </p>
+
+            <ul class="checklist">
+              <li>Your college email is used once, for verification, and is never shown to students.</li>
+              <li>Reports are reviewed, and repeat offenders lose access.</li>
+              <li>Block and unmatch are always one tap away.</li>
+              <li>Age gate at signup — SWAY is 18+ only.</li>
+            </ul>
+          </div>
+
+          <aside class="quote-card reveal">
+            <p class="quote-card__label">THE RULE</p>
+            <p class="quote-card__text">
+              “Say anything about the campus. Never about a person’s safety.”
+            </p>
+            <p class="quote-card__by">— SWAY community guidelines</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ── Install ────────────────────────────────────────── -->
+      <section class="section section--dark" id="install">
+        <div class="wrap">
+          <header class="section__head reveal">
+            <p class="eyebrow eyebrow--light">GET SWAY</p>
+            <h2>Install it in under a minute.</h2>
+            <p class="section__lede">
+              Android gets a proper APK. iPhone runs the same app as a home-screen app — no App Store
+              wait.
+            </p>
+          </header>
+
+          <div class="install">
+            <article class="install__card reveal">
+              <div class="install__head">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="install__logo">
+                  <path d="M6 9l6-5 6 5v6l-6 5-6-5V9z" /><path d="M9 12h6" />
+                </svg>
+                <div>
+                  <h3>Android</h3>
+                  <p class="install__meta">APK · ~30 MB · Android 8+</p>
+                </div>
+              </div>
+              <ol class="install__steps">
+                <li>Tap the download button and open the APK.</li>
+                <li>Allow “Install unknown apps” if Android asks.</li>
+                <li>Open SWAY and verify your college email.</li>
+              </ol>
+              <a
+                class="btn btn--primary btn--full"
+                href="https://expo.dev/accounts/fixyes/projects/sway-campus/builds"
+                data-download="android"
+                rel="noopener"
+              >
+                Download APK
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+              </a>
+            </article>
+
+            <article class="install__card reveal">
+              <div class="install__head">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="install__logo">
+                  <rect x="7" y="2.5" width="10" height="19" rx="2.6" /><path d="M11 18.6h2" />
+                </svg>
+                <div>
+                  <h3>iPhone</h3>
+                  <p class="install__meta">Safari → Add to Home Screen</p>
+                </div>
+              </div>
+              <ol class="install__steps">
+                <li>Open the app link in <strong>Safari</strong>.</li>
+                <li>Tap Share, then “Add to Home Screen”.</li>
+                <li>Launch SWAY from the icon — full screen, no browser bar.</li>
+              </ol>
+              <a class="btn btn--light btn--full" href="https://sway.pages.dev" data-download="ios">
+                Open the iPhone app
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FAQ ────────────────────────────────────────────── -->
+      <section class="section" id="faq">
+        <div class="wrap wrap--narrow">
+          <header class="section__head reveal">
+            <p class="eyebrow">FAQ</p>
+            <h2>Straight answers.</h2>
+          </header>
+
+          <div class="faq">
+            <details class="reveal">
+              <summary>Is SWAY really anonymous?</summary>
+              <p>
+                On the wall, yes — posts are not linked to your handle or email. For safety, reports
+                can be traced to an account by the team. That trace is never visible to students.
+              </p>
+            </details>
+
+            <details class="reveal">
+              <summary>My college isn’t listed. What now?</summary>
+              <p>
+                SWAY adds campuses in batches. New colleges are verified before they go live — you can
+                request yours from inside the app.
+              </p>
+            </details>
+
+            <details class="reveal">
+              <summary>Can faculty join?</summary>
+              <p>No. Only student email domains are allowed, and faculty accounts are blocked on sight.</p>
+            </details>
+
+            <details class="reveal">
+              <summary>Will an iPhone home-screen app get updates?</summary>
+              <p>
+                Yes. The iPhone version is a web app that caches itself — open it with internet once and
+                it picks up new versions automatically.
+              </p>
+            </details>
+
+            <details class="reveal">
+              <summary>What does it cost?</summary>
+              <p>Nothing. SWAY is free for students.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Final CTA ──────────────────────────────────────── -->
+      <section class="finale">
+        <div class="wrap finale__inner reveal">
+          <h2>Your campus is already talking.</h2>
+          <div class="cta-row cta-row--center">
+            <a
+              class="btn btn--primary"
+              href="https://expo.dev/accounts/fixyes/projects/sway-campus/builds"
+              data-download="android"
+              rel="noopener"
+            >
+              Download for Android
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+            </a>
+            <a class="btn btn--ghost btn--ghost-light" href="https://sway.pages.dev" data-download="ios">
+              Install on iPhone
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <div class="footer__brand">
+          <span class="brand__word">SWAY</span><span class="brand__dot" aria-hidden="true"></span>
+          <p>The unfiltered campus pulse. Built for students, by students.</p>
+        </div>
+
+        <nav class="footer__links" aria-label="Footer">
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#safety">Safety</a>
+          <a href="#install">Install</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <p class="footer__legal">© <span id="year">2026</span> SWAY · 18+ · Campus students only</p>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>

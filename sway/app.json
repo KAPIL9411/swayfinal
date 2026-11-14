@@ -1,0 +1,85 @@
+{
+  "expo": {
+    "name": "SWAY",
+    "slug": "sway-campus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "sway",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sway.campus",
+      "infoPlist": {
+        "NSCameraUsageDescription": "SWAY needs camera access to upload photos to posts",
+        "NSPhotoLibraryUsageDescription": "SWAY needs photo library access to upload photos"
+      }
+    },
+    "android": {
+      "package": "com.sway.campus",
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "backgroundColor": "#9700cd",
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "monochromeImage": "./assets/notification-icon.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#9700cd"
+        }
+      ],
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "SWAY uses your photos so you can upload a student ID or post image.",
+          "cameraPermission": "SWAY uses the camera so you can photograph your student ID."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#9700cd"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "enableBundleCompression": true,
+            "useLegacyPackaging": true,
+            "networkInspector": false
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false,
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "38c4d6d4-e22d-476b-854a-cc51ba29c946"
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>SWAY Admin · Student ID review</title>
+    <link rel="preconnect" href="https://sway-api.getfixyes.workers.dev" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        SWAY<span class="brand-sub">ADMIN</span>
+      </div>
+      <div class="top-right">
+        <span id="who" class="who"></span>
+        <button id="logoutBtn" class="ghost" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="loginView" class="login">
+        <div class="card">
+          <p class="kicker">STAFF ONLY</p>
+          <h1>Student ID review</h1>
+          <p class="muted">Accounts on the admin allowlist only. Everything here is logged.</p>
+
+          <form id="loginForm" novalidate>
+            <label>
+              <span>Email</span>
+              <input id="email" type="email" autocomplete="username" placeholder="you@example.com" required />
+            </label>
+            <label>
+              <span>Password</span>
+              <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="••••••••"
+                minlength="8"
+                required
+              />
+            </label>
+            <p id="loginError" class="error" hidden></p>
+            <button id="loginBtn" class="primary" type="submit">Log in</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="dashView" hidden>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">WAITING</span>
+            <strong id="statPending">–</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">APPROVED</span>
+            <strong id="statApproved">–</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">REJECTED</span>
+            <strong id="statRejected">–</strong>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-status="pending">Pending</button>
+            <button class="tab" data-status="approved">Approved</button>
+            <button class="tab" data-status="rejected">Rejected</button>
+          </div>
+          <button id="refreshBtn" class="ghost small" type="button">Refresh</button>
+        </div>
+
+        <div id="notice" class="notice" hidden></div>
+        <div id="list" class="list"></div>
+      </section>
+    </main>
+
+    <div id="viewer" class="viewer" hidden>
+      <img id="viewerImg" alt="Student ID card" />
+      <button id="viewerClose" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
