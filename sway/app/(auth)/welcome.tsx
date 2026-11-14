@@ -37,6 +37,7 @@ const TILES: { colors: [string, string]; height: number }[] = [
 
 /** One column of the photo wall. */
 function Column({ tiles, top }: { tiles: typeof TILES; top: number }) {
+  const AVATARS = ['🦦', '🐼', '🦊', '🦉', '🐨', '🦅', '🦜', '🦄', '🌟'];
   return (
     <View style={[styles.column, { marginTop: top }]}>
       {tiles.map((tile, index) => (
@@ -48,7 +49,9 @@ function Column({ tiles, top }: { tiles: typeof TILES; top: number }) {
             style={StyleSheet.absoluteFill}
           />
           <View style={styles.tileGlow} />
-          <View style={styles.avatarOverlay} />
+          <View style={styles.avatarOverlay}>
+            <Text style={styles.avatarEmojiText}>{AVATARS[index % AVATARS.length]}</Text>
+          </View>
         </View>
       ))}
     </View>
@@ -278,19 +281,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarEmoji: {
-    fontSize: 18,
-    color: '#FFFFFF',
-  },
   avatarOverlay: {
     position: 'absolute',
-    top: '25%',
-    left: '25%',
-    width: '50%',
-    height: '50%',
+    top: '20%',
+    left: '20%',
+    width: '60%',
+    height: '60%',
     borderRadius: 999,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.5)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  avatarEmojiText: {
+    fontSize: 24,
+    color: '#1A1A1A',
   },
 });
