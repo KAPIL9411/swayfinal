@@ -15,6 +15,7 @@ import { discoverRoutes } from './routes/discover';
 import { matchesRoutes } from './routes/matches';
 import { reportsRoutes } from './routes/reports';
 import { verificationRoutes } from './routes/verification';
+import { adminRoutes } from './routes/admin';
 import { errorHandler } from './middleware/errorHandler';
 import type { AppEnv } from './types';
 
@@ -69,6 +70,7 @@ app.route('/discover', discoverRoutes);
 app.route('/matches', matchesRoutes);
 app.route('/reports', reportsRoutes);
 app.route('/verification', verificationRoutes);
+app.route('/admin', adminRoutes);
 
 app.onError(errorHandler);
 

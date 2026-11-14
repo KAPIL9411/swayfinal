@@ -30,9 +30,12 @@ export default function ProfileScreen() {
     queryFn: authApi.me,
   });
 
-  const collegesQuery = useQuery({
-    queryKey: queryKeys.colleges.all,
-    queryFn: collegesApi.list,
+  const collegeId = profileQuery.data?.profile?.college_id;
+
+  const collegeQuery = useQuery({
+    queryKey: [...queryKeys.colleges.all, collegeId],
+    queryFn: () => collegesApi.getById(collegeId as string),
+    enabled: Boolean(collegeId),
   });
 
   const updateMutation = useMutation({
@@ -44,7 +47,7 @@ export default function ProfileScreen() {
   });
 
   const profile = profileQuery.data?.profile;
-  const college = collegesQuery.data?.colleges.find((c) => c.id === profile?.college_id);
+  const college = collegeQuery.data?.college;
 
   async function handleSignOut() {
     analytics.track(EVENTS.SIGNOUT);

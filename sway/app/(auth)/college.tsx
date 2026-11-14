@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -15,43 +15,59 @@ import { colors, spacing, typography, radius } from '../../src/theme/tokens';
 import { collegesApi, type College } from '../../src/lib/api';
 import { useOnboardingStore } from '../../src/features/auth/onboardingStore';
 
+const DEBOUNCE_MS = 300;
+const MIN_QUERY = 2;
+
 export default function CollegeSelectionScreen() {
   const router = useRouter();
+  const storedCollege = useOnboardingStore((state) => state.college);
   const setCollege = useOnboardingStore((state) => state.setCollege);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [colleges, setColleges] = useState<College[]>([]);
-  const [selectedCollege, setSelectedCollege] = useState<College | null>(null);
+  const [selectedCollege, setSelectedCollege] = useState<College | null>(
+    storedCollege
+      ? {
+          id: storedCollege.id,
+          name: storedCollege.name,
+          city: storedCollege.city ?? null,
+          state: storedCollege.state ?? null,
+        }
+      : null
+  );
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const requestId = useRef(0);
+
+  // Debounced server search: the directory holds ~50k institutions.
   useEffect(() => {
-    loadColleges();
-  }, []);
+    const query = searchQuery.trim();
+    const timer = setTimeout(() => loadColleges(query), query ? DEBOUNCE_MS : 0);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  const filteredColleges = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) return colleges;
-    return colleges.filter(
-      (c) =>
-        c.name.toLowerCase().includes(query) ||
-        c.city?.toLowerCase().includes(query) ||
-        c.state?.toLowerCase().includes(query)
-    );
-  }, [searchQuery, colleges]);
+  async function loadColleges(query: string) {
+    const current = requestId.current + 1;
+    requestId.current = current;
 
-  async function loadColleges() {
+    if (!query) setLoading(true);
     setError(null);
+
     try {
-      const { colleges: list } = await collegesApi.list();
+      const { colleges: list } = await collegesApi.search(query);
+      if (requestId.current !== current) return;
       setColleges(list);
     } catch (err) {
+      if (requestId.current !== current) return;
       console.error('Failed to load colleges:', err);
       setError('Could not load colleges. Check your connection.');
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (requestId.current === current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   }
 
@@ -60,6 +76,15 @@ export default function CollegeSelectionScreen() {
     setCollege(selectedCollege);
     router.push('/(auth)/username');
   }
+
+  const trimmedQuery = searchQuery.trim();
+  const tooShort = trimmedQuery.length === 1;
+
+  const hint = useMemo(() => {
+    if (tooShort) return 'Type at least 2 letters to search';
+    if (!trimmedQuery) return 'Popular campuses · search to find yours';
+    return `${colleges.length} ${colleges.length === 1 ? 'result' : 'results'} for “${trimmedQuery}”`;
+  }, [tooShort, trimmedQuery, colleges.length]);
 
   function renderCollege({ item }: { item: College }) {
     const isSelected = selectedCollege?.id === item.id;
@@ -99,7 +124,7 @@ export default function CollegeSelectionScreen() {
         <Text style={styles.searchIcon}>🔍</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search colleges..."
+          placeholder="Search colleges by name or city"
           placeholderTextColor={colors.light.onSurfaceVariant}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -113,6 +138,8 @@ export default function CollegeSelectionScreen() {
         )}
       </View>
 
+      <Text style={styles.hint}>{hint}</Text>
+
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.light.primary} />
@@ -121,33 +148,40 @@ export default function CollegeSelectionScreen() {
       ) : error ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>📡</Text>
-          <Text style={styles.emptyTitle}>Can't reach SWAY</Text>
+          <Text style={styles.emptyTitle}>Can&apos;t reach SWAY</Text>
           <Text style={styles.emptyText}>{error}</Text>
-          <Button size="sm" onPress={loadColleges} style={styles.retry}>
+          <Button size="sm" onPress={() => loadColleges(trimmedQuery)} style={styles.retry}>
             Try again
           </Button>
         </View>
-      ) : filteredColleges.length === 0 ? (
+      ) : tooShort ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyIcon}>⌨️</Text>
+          <Text style={styles.emptyTitle}>Keep typing</Text>
+          <Text style={styles.emptyText}>Two letters are enough to start searching.</Text>
+        </View>
+      ) : colleges.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>🏫</Text>
           <Text style={styles.emptyTitle}>No colleges found</Text>
           <Text style={styles.emptyText}>
-            {searchQuery ? 'Try a different search term' : 'No colleges available yet'}
+            Try the short form (IIT, NIT, MIT) or the city name.
           </Text>
         </View>
       ) : (
         <FlatList
-          data={filteredColleges}
+          data={colleges}
           renderItem={renderCollege}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
               onRefresh={() => {
                 setRefreshing(true);
-                loadColleges();
+                loadColleges(trimmedQuery);
               }}
               tintColor={colors.light.primary}
             />
@@ -157,7 +191,7 @@ export default function CollegeSelectionScreen() {
 
       <View style={styles.footer}>
         <Button fullWidth onPress={handleContinue} disabled={!selectedCollege}>
-          Continue
+          {selectedCollege ? `Continue as ${selectedCollege.name}` : 'Continue'}
         </Button>
       </View>
     </ScreenContainer>
@@ -195,7 +229,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.light.surfaceContainerLow,
     marginHorizontal: spacing.marginMobile,
-    marginBottom: spacing.md,
     paddingHorizontal: spacing.md,
     borderRadius: radius.default,
     height: 48,
@@ -216,6 +249,14 @@ const styles = StyleSheet.create({
   clearIcon: {
     fontSize: 16,
     color: colors.light.onSurfaceVariant,
+  },
+  hint: {
+    fontFamily: typography.labelSm.fontFamily,
+    fontSize: 11,
+    color: colors.light.onSurfaceVariant,
+    marginHorizontal: spacing.marginMobile,
+    marginTop: spacing.sm,
+    marginBottom: spacing.sm,
   },
   listContent: {
     paddingHorizontal: spacing.marginMobile,

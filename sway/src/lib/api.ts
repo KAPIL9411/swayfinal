@@ -287,7 +287,15 @@ export const authApi = {
 };
 
 export const collegesApi = {
-  list: () => api.get<{ colleges: College[] }>('/colleges', { requireAuth: false }),
+  /** Server-side search over the full directory. Empty query = popular campuses. */
+  search: (query?: string) =>
+    api.get<{ colleges: College[]; query?: string }>(
+      `/colleges${query ? `?q=${encodeURIComponent(query)}` : ''}`,
+      { requireAuth: false }
+    ),
+
+  getById: (id: string) =>
+    api.get<{ college: College }>(`/colleges/${id}`, { requireAuth: false }),
 };
 
 export const verificationApi = {

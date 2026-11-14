@@ -72,39 +72,6 @@ async function findCollegeByEmailDomain(supabase: ReturnType<typeof getSupabaseA
   return data ?? null;
 }
 
-/**
- * Testing helper: register the email's domain as a campus so any address can
- * finish onboarding while there is no real college mail to receive an OTP.
- * Only used when TEST_OTP_CODE is configured on the Worker.
- */
-async function createCollegeForDomain(
-  supabase: ReturnType<typeof getSupabaseAdmin>,
-  email: string
-) {
-  const domain = email.split('@')[1]?.toLowerCase();
-  if (!domain) return null;
-
-  const label = domain.split('.')[0] ?? domain;
-  const { data, error } = await supabase
-    .from('colleges')
-    .insert({
-      name: label.toUpperCase(),
-      city: null,
-      state: null,
-      email_domains: [domain],
-      is_active: true,
-    })
-    .select('id, name, city, state, email_domains')
-    .single();
-
-  if (error) {
-    // Another request may have inserted it first
-    return findCollegeByEmailDomain(supabase, email);
-  }
-
-  return data;
-}
-
 // Testing only: create/find the auth user and mint a real session for them
 async function mintSessionWithoutOtp(
   supabase: ReturnType<typeof getSupabaseAdmin>,
@@ -131,9 +98,6 @@ authRoutes.post('/verify-email', async (c) => {
   const supabase = getSupabaseAdmin(c.env);
   let college = await findCollegeByEmailDomain(supabase, parsed.data.email);
 
-  if (!college && c.env.TEST_OTP_CODE) {
-    college = await createCollegeForDomain(supabase, parsed.data.email);
-  }
 
   // Any email can sign in now; an unknown domain simply means the student
   // verifies with a student ID instead of their college inbox.
@@ -166,11 +130,6 @@ authRoutes.post('/send-otp', async (c) => {
 
   const email = parsed.data.email.toLowerCase();
   const supabase = getSupabaseAdmin(c.env);
-
-  if (c.env.TEST_OTP_CODE) {
-    const known = await findCollegeByEmailDomain(supabase, email);
-    if (!known) await createCollegeForDomain(supabase, email);
-  }
 
   // Testing mode: skip Supabase mail entirely, the tester types the test code
   if (c.env.TEST_OTP_CODE) {
