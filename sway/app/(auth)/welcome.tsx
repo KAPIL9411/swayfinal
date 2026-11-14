@@ -155,9 +155,9 @@ export default function WelcomeScreen() {
               {starting ? 'Starting…' : 'Discover'}
             </Text>
             <View style={styles.arrowCircle}>
-              <Ionicons name="chevron-forward" size={13} color={CORAL} style={styles.arrow} />
-              <Ionicons name="chevron-forward" size={13} color={CORAL} style={styles.arrow} />
-              <Ionicons name="chevron-forward" size={13} color={CORAL} />
+              <Text style={styles.avatarEmoji}>🦦</Text>
+              <Text style={styles.avatarEmoji}>🦦</Text>
+              <Text style={styles.avatarEmoji}>🦦</Text>
             </View>
           </Pressable>
         </View>
@@ -286,5 +286,9 @@ const styles = StyleSheet.create({
   },
   arrow: {
     marginRight: -6,
+  },
+  avatarEmoji: {
+    fontSize: 18,
+    color: '#FFFFFF',
   },
 });
