@@ -199,12 +199,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: -1,
-    height: '62%',
+    bottom: 0,
+    height: '55%',
   },
   contentScroll: {
     flex: 1,
-    marginTop: -46,
+    marginTop: -30,
   },
   content: {
     flexGrow: 1,
