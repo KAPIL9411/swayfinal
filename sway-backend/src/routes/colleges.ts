@@ -32,6 +32,19 @@ const ALIASES: Record<string, string> = {
   nitr: 'national institute of technology',
 };
 
+/** Old/new city spellings and common nicknames used inside college names. */
+const PLACE_ALIASES: Record<string, string> = {
+  trichy: 'tiruchirapalli',
+  bombay: 'mumbai',
+  bangalore: 'bengaluru',
+  madras: 'chennai',
+  calcutta: 'kolkata',
+  gurgaon: 'gurugram',
+  vizag: 'visakhapatnam',
+  cochin: 'kochi',
+};
+
+
 function clampLimit(value: string | undefined) {
   const parsed = Number.parseInt(value ?? '', 10);
   if (!Number.isFinite(parsed)) return 30;
@@ -45,11 +58,22 @@ collegesRoutes.get('/', async (c) => {
   const offset = Math.max(Number.parseInt(c.req.query('offset') ?? '0', 10) || 0, 0);
 
   if (query.length >= 2) {
-    const safe = query.replace(/[%,()]/g, ' ').trim();
-    const alias = ALIASES[safe.toLowerCase()];
-    const terms = alias ? [safe, alias] : [safe];
+    const safe = query.replace(/[%,()]/g, ' ').replace(/\s+/g, ' ').trim();
+    const words = safe.split(' ').filter(Boolean);
 
-    const filter = terms
+    // Every word gets its variants: the raw word plus an abbreviation or city
+    // expansion ("iit" -> "indian institute of technology", "trichy" ->
+    // "tiruchirapalli"). Two-letter words only use the expansion, otherwise
+    // "du" matches every "EDUCATION" in the directory.
+    const groups = words.map((word) => {
+      const key = word.toLowerCase();
+      const expansion = ALIASES[key] ?? PLACE_ALIASES[key] ?? null;
+      if (!expansion) return [word];
+      return key.length <= 2 ? [expansion] : [word, expansion];
+    });
+
+    const filter = groups
+      .flat()
       .flatMap((term) => [
         `name.ilike.%${term}%`,
         `city.ilike.%${term}%`,
@@ -63,22 +87,32 @@ collegesRoutes.get('/', async (c) => {
       .eq('is_active', true)
       .or(filter)
       .order('name')
-      .limit(Math.min(200, limit * 5));
+      .limit(Math.min(400, limit * 10));
 
     if (error) throw error;
 
-    // Rank: name starts with the query, then contains it, then everything else
-    // (city/state matches). Alphabetical order alone buried the real IITs
-    // under every "... Institute of Technology" in the directory.
-    const termsLower = terms.map((term) => term.toLowerCase());
+    const lower = (value: string | null) => (value ?? '').toLowerCase();
+
+    // Every word must appear somewhere: "iit kharagpur" has to match the row's
+    // expanded name even when the directory writes it with a comma.
+    const matches = (data ?? []).filter((college) => {
+      const haystack = `${lower(college.name)} ${lower(college.city)} ${lower(college.state)}`;
+      return groups.every((group) => group.some((term) => haystack.includes(term.toLowerCase())));
+    });
+
+    // Rank: name starts with what was typed, then contains it, then the rest.
     const rank = (name: string) => {
-      const lower = name.toLowerCase();
-      if (termsLower.some((term) => lower.startsWith(term))) return 0;
-      if (termsLower.some((term) => lower.includes(term))) return 1;
+      for (const group of groups) {
+        for (const term of group) {
+          const value = term.toLowerCase();
+          if (lower(name).startsWith(value)) return 0;
+          if (lower(name).includes(value)) return 1;
+        }
+      }
       return 2;
     };
 
-    const ranked = (data ?? [])
+    const ranked = matches
       .map((college) => ({ college, r: rank(college.name) }))
       .sort((a, b) => a.r - b.r || a.college.name.localeCompare(b.college.name))
       .map((entry) => entry.college)

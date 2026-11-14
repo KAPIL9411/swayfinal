@@ -26,6 +26,7 @@ const API = arg('api', 'https://sway-api.getfixyes.workers.dev');
 const EMAIL = arg('email', 'admin@sway.app');
 const PASSWORD = arg('password', '');
 const FILE = arg('file', '');
+const SOURCE_OVERRIDE = arg('source', '');
 const LIMIT = Number.parseInt(arg('limit', '0'), 10) || 0;
 
 if (!PASSWORD) {
@@ -97,17 +98,20 @@ const titleish = (value) => {
 function normalise(rows) {
   const [header, ...body] = rows;
   const index = Object.fromEntries(header.map((name, position) => [clean(name).toLowerCase(), position]));
+  const indexOf = (...names) => names.map((name) => index[name]).find((value) => value !== undefined);
+  const stateIndex = indexOf('state', 'statename');
+  const cityIndex = indexOf('city', 'district', 'districtname');
+  const nameIndex = indexOf('name', 'institutionname', 'collegename');
 
   const seen = new Set();
   const colleges = [];
 
   for (const row of body) {
-    const name = clean(row[index.name]);
+    const name = clean(row[nameIndex]);
     if (name.length < 3) continue;
 
-    const state = titleish(row[index.state])?.slice(0, 120) ?? null;
-    const city =
-      (titleish(row[index.city]) ?? titleish(row[index.district]))?.slice(0, 120) ?? null;
+    const state = titleish(row[stateIndex])?.slice(0, 120) ?? null;
+    const city = titleish(row[cityIndex])?.slice(0, 120) ?? null;
     const safeName = name.slice(0, 200);
     const key = `${safeName.toLowerCase()}|${(state ?? '').toLowerCase()}`;
     if (seen.has(key)) continue;
@@ -147,8 +151,9 @@ async function importBatch(token, colleges) {
 
 /* ---------- main ---------- */
 
-const csv = FILE ? await readFile(FILE, 'utf8') : await (await fetch(SOURCE)).text();
-console.log(`source: ${FILE || SOURCE} (${(csv.length / 1024 / 1024).toFixed(1)} MB)`);
+const sourceUrl = SOURCE_OVERRIDE || SOURCE;
+const csv = FILE ? await readFile(FILE, 'utf8') : await (await fetch(sourceUrl)).text();
+console.log(`source: ${FILE || sourceUrl} (${(csv.length / 1024 / 1024).toFixed(1)} MB)`);
 
 const colleges = normalise(parseCsv(csv)).slice(0, LIMIT || undefined);
 console.log(`parsed: ${colleges.length} unique colleges`);
